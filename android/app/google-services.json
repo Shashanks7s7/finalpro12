@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "32871632909",
+    "project_id": "immuneap",
+    "storage_bucket": "immuneap.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:32871632909:android:8c5b52740cace705af4544",
+        "android_client_info": {
+          "package_name": "com.example.finallygod"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "32871632909-u2l4ko9eskvsloiu11mh318re49h1r8k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.finallygod",
+            "certificate_hash": "eb1d57671a9a151def51bcad65a429933bada692"
+          }
+        },
+        {
+          "client_id": "32871632909-r6a20s4o7u20m2bvo117pejrfbrgecq5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWmJfx-_UmAEZLbCq3UJYssycJDNcynp0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "32871632909-r6a20s4o7u20m2bvo117pejrfbrgecq5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
