@@ -1,8 +1,10 @@
 
 
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:finallygod/Providers/theme.dart';
 import 'package:finallygod/Providers/vacination.dart';
 import 'package:finallygod/screens/auth_Screen.dart';
+
 import 'package:finallygod/screens/covid/test.dart';
 
 
@@ -11,8 +13,10 @@ import 'package:finallygod/screens/home/settings.dart';
 import 'package:finallygod/screens/imunize_details.dart';
 import 'package:finallygod/screens/loading.dart';
 import 'package:finallygod/screens/map_screen.dart';
+import 'package:finallygod/screens/message/messagescreen.dart';
 import 'package:finallygod/screens/myprofile.dart';
 import 'package:finallygod/screens/notificationScreen.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -20,26 +24,12 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 
 import 'screens/home/home.dart';
-
+import 'package:timezone/data/latest_all.dart' as tz;
 String? selectedNotificationPayload;
 void main()async {
    WidgetsFlutterBinding.ensureInitialized();
-   /*const AndroidInitializationSettings initializationSettingsAndroid =
-      AndroidInitializationSettings('ic_launcher');
- final InitializationSettings initializationSettings = InitializationSettings(
-      android: initializationSettingsAndroid,
- );
-  await flutterLocalNotificationsPlugin.initialize(initializationSettings,
-      onSelectNotification: (String? payload) async {
-    if (payload != null) {
-       
-      debugPrint('notification payload: $payload');
-
-    }
-   selectedNotificationPayload=payload;
-
+      tz.initializeTimeZones();
   
-  });*/
   
   await Firebase.initializeApp();
  
@@ -83,8 +73,12 @@ class _MyAppState extends State<MyApp> {
       theme: CustomTheme.lightTheme,
       darkTheme: CustomTheme.darkTheme,
       themeMode: currenttheme.currentTheme,
-      home: StreamBuilder(stream: FirebaseAuth.instance.authStateChanges(),
+      home:
+      StreamBuilder(stream: FirebaseAuth.instance.authStateChanges(),
+      
          builder: (context,snapshotdata)=> snapshotdata.hasData? Home(vacdetails):AuthScreen()
+      ,
+    
       ),
       
       routes: {
@@ -92,7 +86,7 @@ class _MyAppState extends State<MyApp> {
       'immunedetail':(context)=>ImmuneDetails(vacdetails ),
       'myprofile':(context)=> MyProfile(),
       'noti':(context)=>NotificationScreen(payload: selectedNotificationPayload),
-      'covid':(context)=> Test(),  //CovidScreen(),
+      'chat':(context)=> ChatScreen(),  //CovidScreen(),
       'map':(context)=>MapScreen(),
       'settings':(context)=> Settings(),
       'loading':(context)=>Loading()

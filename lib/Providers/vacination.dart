@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
 class Vaccination with ChangeNotifier {
+  final int id;
   final String disease;
   final String vaccine;
   final String brandname;
@@ -11,7 +12,10 @@ class Vaccination with ChangeNotifier {
   final List time;
   final int safe;
   Vaccination(
-      {required this.disease,
+
+      {
+      required this.id,
+      required this.disease,
       required this.vaccine,
       required this.brandname,
       required this.whatfor,
@@ -25,6 +29,7 @@ class Vaccination with ChangeNotifier {
 
 List<Vaccination> vacdetails = [
   Vaccination(
+    id: 0,
       disease: 'Diphtheria,Pertussis and Tetanus',
       vaccine:
           'Diphtheria and Tetanus Toxoids and Acellular Pertussis Adsorbed (DTaP)',
@@ -53,6 +58,7 @@ List<Vaccination> vacdetails = [
       time: []
       ),*/
   Vaccination(
+    id: 1,
       disease: ' Measles, Mumps and Rubella',
       vaccine: 'Measles, Mumps and Rubella Vaccine',
       brandname: 'M-M-R II',
@@ -67,6 +73,7 @@ List<Vaccination> vacdetails = [
       safe: 98
       ),
   Vaccination(
+    id: 2,
       disease: 'Poliovirus',
       vaccine: 'Inactivated Poliovirus Vaccine',
       brandname: 'Ipol',
@@ -81,6 +88,7 @@ List<Vaccination> vacdetails = [
       safe: 97
       ),
   Vaccination(
+    id: 3,
       disease: 'Pneumococcal 13-valent Conjugate',
       vaccine: 'Pneumococcal 13-valent Conjugate Vaccine',
       brandname: 'Prevnar 13',
@@ -95,6 +103,7 @@ List<Vaccination> vacdetails = [
       safe: 98
       ),
   Vaccination(
+    id: 4,
       disease: 'Rotavirus',
       vaccine: 'Rotavirus Vaccine',
       brandname: 'Rotarix and RotaTeq',
@@ -109,6 +118,7 @@ List<Vaccination> vacdetails = [
       safe: 98
       ),
   Vaccination(
+    id: 5,
       disease: 'Japanese Encephalitis',
       vaccine: 'Japanese Encephalitis Vaccine',
       brandname: 'N/A',
@@ -123,6 +133,7 @@ List<Vaccination> vacdetails = [
       safe: 97
       ),
   Vaccination(
+    id: 6,
       disease: 'Oral poliovirus',
       vaccine: "Oral poliovirus vaccine",
       brandname: 'N/A',

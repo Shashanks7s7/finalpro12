@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:finallygod/Providers/notifications.dart';
 import 'package:finallygod/Providers/vacination.dart';
 import 'package:finallygod/widgets/ipicker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -93,10 +94,9 @@ class _ChildFormState extends State<ChildForm> {
                       .doc(value.id)
                       .update({'id': value.id});
                 })));
-        scheduleAlarm();
+        Noti(vacdetails).notifications();
 
-        print(myFormat.format(da));
-        print(DateTime.now().toIso8601String());
+       
       } catch (error) {
         setState(() {
           isloading = false;
@@ -266,21 +266,22 @@ primary: Colors.grey[400]
     }));
   }
 
-  Future<void> scheduleAlarm() async {
+ /* Future<void> scheduleAlarm() async {
+      final user = FirebaseAuth.instance.currentUser;
     var va = '2021-07-19 12:40:30';
     print(DateTime.now().toLocal());
     var date = DateTime.now(); //DateTime.parse(va);
     List<dynamic> scheduledDate = [
       date.add(Duration(seconds: 10)),
-      //  date.add(Duration(seconds: 10)),
-      //  date.add(Duration(seconds: 15))
+       date.add(Duration(seconds: 20)),
+       date.add(Duration(seconds: 30))
     ];
     List<String> title = ["Nameste", "this is the second", "third"];
 
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
       'id',
       'name',
-      'Channel for Alarm notification',
+      
       icon: 'ic_launcher',
       enableVibration: true,
       importance: Importance.high,
@@ -292,12 +293,21 @@ primary: Colors.grey[400]
       android: androidPlatformChannelSpecifics,
     );
 
-    // for (int i = 0; i <= 1; i++) {
-    await flutterLocalNotificationsPlugin.schedule(0, "Namaste",
-        " Your child is registered", scheduledDate[0], platformChannelSpecifics,
-        payload: "3",
+    for (int i = 0; i <= 2; i++) {
+    await flutterLocalNotificationsPlugin.schedule(0, title[i],title[i], scheduledDate[i], platformChannelSpecifics,
+        payload:  i.toString(),
         androidAllowWhileIdle: true);
+      
+   
+    FirebaseFirestore.instance
+        .collection('notifications').
+       add({
+         'userId': user!.uid,
+         'createdAt':DateTime.now(),
+         "noti": title[i]});
+  
 
-    //}
-  }
+
+    }
+  }*/
 }

@@ -81,13 +81,16 @@ class _AuthCardState extends State<AuthCard> {
     FocusScope.of(context).unfocus();
 
     try {
-      if (!isvalid || image==null) {
+      if(!islogin){
+         if (!isvalid || image==null ) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text("Please pick an image"),
         backgroundColor: Theme.of(context).errorColor,
       ));
         return;
       }
+      }
+      
 
       setState(() {
         loading = true;

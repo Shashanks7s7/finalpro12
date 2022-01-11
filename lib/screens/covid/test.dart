@@ -28,10 +28,10 @@ class _TestState extends State<Test> {
 int latest=0;
 
   @override
-  void initState() {
+   initState()  {
     _covid = API().getdata();
-
-    print(_covid);
+     
+    print("jhkj $_covid");
     // TODO: implement initState
     super.initState();
   }
@@ -51,7 +51,7 @@ int latest=0;
     ),
 body: FutureBuilder<Covid>(
         future: _covid,
-        builder: (context, snapshot) {
+        builder: (BuildContext context,AsyncSnapshot snapshot) {
           if (!snapshot.hasData) {
             return Center(
               child: CircularProgressIndicator(),

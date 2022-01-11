@@ -1,16 +1,13 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:finallygod/Providers/theme.dart';
+
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:finallygod/Providers/vacination.dart';
 import 'package:finallygod/widgets/drawer.dart';
-import 'package:finallygod/widgets/home_tabview.dart';
-import 'package:finallygod/widgets/notice_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:finallygod/widgets/home/cus_clipper.dart';
 
-import '../imunize_details.dart';
+
+
 import '../myprofile.dart';
 import 'clickable.dart';
 import 'bargraph_view.dart';
@@ -30,7 +27,11 @@ class _HomeState extends State<Home> {
   @override
   initState(){
     super.initState();
-
+ AwesomeNotifications().actionStream.listen((event) {
+      print('event received!');
+      print(event.toMap().toString());
+      // do something based on event...
+    });
     var initializationSettingsAndroid =
     AndroidInitializationSettings('ic_launcher');
     
@@ -221,45 +222,6 @@ Navigator.of(context).pushNamed("noti");
   }
   
   
-  Future<void> scheduleAlarm() async {
-    var va = '2021-07-19 12:40:30';
-    print(DateTime.now().toLocal());
-    var date = DateTime.now();          //DateTime.parse(va);
-    List<dynamic> scheduledDate = [
   
-      date.add(Duration(seconds: 5)),
-      date.add(Duration(seconds: 10)),
-      date.add(Duration(seconds: 15))
-    ];
-    List<String> title = ["Nameste", "this is the second", "third"];
-   
-    
-    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
-      'id',
-      'name',
-      'Channel for Alarm notification',
-      icon: 'ic_launcher',
-      enableVibration: true,
-      importance: Importance.high,
-      priority: Priority.high,
-      largeIcon: DrawableResourceAndroidBitmap('ic_launcher'),
-      
-    );
-       
-    var platformChannelSpecifics = NotificationDetails(
-      android: androidPlatformChannelSpecifics,
-    );
-
-    for (int i = 0; i <= 2; i++) {
-      await flutterLocalNotificationsPlugin.schedule(
-          i, "Its time to get ${widget.vaccination[i].vaccine}", "Against for ${widget.vaccination[i].disease}", scheduledDate[i], platformChannelSpecifics,payload: widget.vaccination[i].vaccine,
-          androidAllowWhileIdle: true
-          
-          );
-    
-          
-    }
-    
-  }
   
 }

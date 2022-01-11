@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 
 class Clickable extends StatelessWidget {
@@ -153,7 +154,7 @@ class Clickable extends StatelessWidget {
             ),
           ),
           GestureDetector(
-              onTap: ()=>Navigator.of(context).pushNamed('covid'),
+              onTap: ()=> Navigator.of(context).pushNamed('chat'),
             child: Container(
               //padding: EdgeInsets.all(1),
               decoration: BoxDecoration(
@@ -188,7 +189,7 @@ class Clickable extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(
-                        Icons.dangerous,
+                        Icons.message,
                         color: Colors.white,
                         size: 50,
                       ),
@@ -196,7 +197,7 @@ class Clickable extends StatelessWidget {
                         padding: EdgeInsets.all(8),
                         alignment: Alignment.bottomCenter,
                         child: Text(
-                          'Covid Update',
+                          'Message',
                           style: textStyle,
                         ),
                       )
