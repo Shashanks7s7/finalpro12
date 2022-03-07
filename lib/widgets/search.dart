@@ -1,5 +1,5 @@
-import 'package:finallygod/Providers/api_manager.dart';
-import 'package:finallygod/Providers/covid.dart';
+import 'package:finallygod/Modals/api_manager.dart';
+import 'package:finallygod/Modals/covid.dart';
 import 'package:finallygod/screens/covid/test.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';

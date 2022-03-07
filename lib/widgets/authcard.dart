@@ -33,6 +33,7 @@ class _AuthCardState extends State<AuthCard> {
       image = imm;
     });
   }
+
   final auth = FirebaseAuth.instance;
 
   void googlesubmit() async {
@@ -43,7 +44,7 @@ class _AuthCardState extends State<AuthCard> {
       final googlesignin = GoogleSignIn();
 
       final user = await googlesignin.signIn();
-      
+
       final googleAuth = await user!.authentication;
       final credentials = GoogleAuthProvider.credential(
           accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
@@ -53,9 +54,11 @@ class _AuthCardState extends State<AuthCard> {
       FirebaseFirestore.instance
           .collection('users')
           .doc(authresult.user!.uid)
-          .set({'username': user.displayName, 'email': user.email
-          ,'userimage':user.photoUrl
-          });
+          .set({
+        'username': user.displayName,
+        'email': user.email,
+        'userimage': user.photoUrl
+      });
     } on PlatformException catch (error) {
       var message = 'An Error Occurred';
       if (error.message != null) {
@@ -76,68 +79,54 @@ class _AuthCardState extends State<AuthCard> {
 
   void submit() async {
     UserCredential authResult;
-
     final isvalid = formkey.currentState!.validate();
     FocusScope.of(context).unfocus();
-
-    try {
-      if(!islogin){
-         if (!isvalid || image==null ) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text("Please pick an image"),
-        backgroundColor: Theme.of(context).errorColor,
-      ));
-        return;
-      }
-      }
-      
-
-      setState(() {
-        loading = true;
-      });
-
+try {
+      if (!islogin) {
+        if (!isvalid || image == null) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text("Please pick an image"),
+            backgroundColor: Theme.of(context).errorColor,
+          ));
+          return;}}
+  setState(() {
+        loading = true;  });
       if (isvalid) {
         formkey.currentState!.save();
         if (islogin) {
           authResult = await auth.signInWithEmailAndPassword(
               email: email, password: password);
         } else {
-
-
           authResult = await auth.createUserWithEmailAndPassword(
               email: email, password: password);
-
-
-         final ref = FirebaseStorage.instance.ref().child("userimage") .child(auth.currentUser!.uid + ".jpg");
-         await ref.putFile(image!).whenComplete(() => ref.getDownloadURL().then((value) => 
-          FirebaseFirestore.instance
-              .collection('users')
-              .doc(authResult.user!.uid)
-              .set({'username': username,
-               'email': email,
-               'userimage':value
-               })
-         ));
-         
-        }
-      }
-    } on PlatformException catch (error) {
+          final ref = FirebaseStorage.instance
+              .ref()
+              .child("userimage")
+              .child(auth.currentUser!.uid + ".jpg");
+          await ref.putFile(image!).whenComplete(() => ref
+              .getDownloadURL()
+              .then((value) => FirebaseFirestore.instance
+                      .collection('users')
+                      .doc(authResult.user!.uid)
+                      .set({
+                    'username': username,
+                    'email': email,
+                    'userimage': value  })));     
+   }} } on PlatformException catch (error) {
       var message = 'An Error Occurred';
       if (error.message != null) {
-        message = error.message.toString();
-      }
+        message = error.message.toString();}
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(message)));
       setState(() {
-        loading = false;
-      });
+        loading = false; });
     } catch (error) {
       print(error);
       setState(() {
         loading = false;
-      });
-    }
-  }
+      });}}
+    
+  
 
   @override
   Widget build(BuildContext context) {
@@ -147,8 +136,7 @@ class _AuthCardState extends State<AuthCard> {
         child: Form(
             key: formkey,
             child: Column(children: [
-                if (!islogin)
-                ImagePick(img),
+              if (!islogin) ImagePick(img),
               if (!islogin)
                 TextFormField(
                   key: ValueKey('username'),

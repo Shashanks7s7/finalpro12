@@ -1,8 +1,8 @@
 
 import 'dart:convert';
 
-import 'package:finallygod/Providers/api_manager.dart';
-import 'package:finallygod/Providers/covid.dart';
+import 'package:finallygod/Modals/api_manager.dart';
+import 'package:finallygod/Modals/covid.dart';
 
 import 'package:finallygod/screens/covid/coroanadetail.dart';
 import 'package:finallygod/screens/covid/corona_details.dart';
@@ -87,6 +87,7 @@ body: FutureBuilder<Covid>(
                     height: MediaQuery.of(context).size.height/1.2,
                     child: ListView.builder(
                         itemCount: filer.length,
+                        
                         itemBuilder: (context, index) {
                           return Card(
                             child: ListTile(

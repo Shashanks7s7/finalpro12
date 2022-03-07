@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:finallygod/Providers/vacination.dart';
+import 'package:finallygod/Modals/vacination.dart';
 import 'package:finallygod/screens/loading.dart';
+import 'package:finallygod/screens/welcome.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -70,8 +71,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
                         title: Text(documents[index]['noti'].toString()),
                         leading: CircleAvatar(child: Text((index+1).toString()),),
                         onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (context){
-                          if (documents[index]['id']=="")
-                          return Loading();
+                          if (documents[index]['id']==null)
+                          return Welcome();
                           return DiseaseDetails(vacdetails[documents[index]['id']]);})),
                       ));
             }));

@@ -1,4 +1,4 @@
-import 'package:finallygod/Providers/covid.dart';
+import 'package:finallygod/Modals/covid.dart';
 import 'package:finallygod/screens/covid/corona_details.dart';
 import 'package:finallygod/widgets/covidchart.dart';
 import 'package:flutter/material.dart';

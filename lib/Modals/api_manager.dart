@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:finallygod/Providers/covid.dart';
+import 'package:finallygod/Modals/covid.dart';
 import 'package:http/http.dart' as http;
 class API {
  Future<Covid> getdata()async{

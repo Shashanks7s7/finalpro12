@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:finallygod/Providers/api_manager.dart';
-import 'package:finallygod/Providers/covid.dart';
+import 'package:finallygod/Modals/api_manager.dart';
+import 'package:finallygod/Modals/covid.dart';
 
 import 'package:finallygod/screens/covid/coroanadetail.dart';
 import 'package:finallygod/widgets/search.dart';

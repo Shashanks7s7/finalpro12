@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:finallygod/widgets/authcard.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -14,12 +12,9 @@ class AuthScreen extends StatelessWidget {
         padding: EdgeInsets.only(top: 30),
         decoration: BoxDecoration(
             gradient: LinearGradient(
-                colors: [Color.fromRGBO(243, 210, 193, 0.6),Colors.red],
+                colors: [Color.fromRGBO(243, 210, 193, 0.6), Colors.red],
                 begin: Alignment.bottomLeft,
                 end: Alignment.topRight)),
-        // height: 200,
-        // width: double.infinity,
-        //  color: Theme.of(context).accentColor,
         child: Container(
           child: Column(
             //   clipBehavior: Clip.none,
@@ -31,28 +26,6 @@ class AuthScreen extends StatelessWidget {
                   size: 100,
                 ),
               ),
-              /* Positioned(
-                   right:0,
-                   top:113,
-                   child: Container(
-                     height: 75,
-                     width: 135,
-                     decoration: BoxDecoration(
-                     borderRadius: BorderRadius.circular(45),
-                      color: Theme.of(context).accentColor) 
-                   ,),
-                 ),
-                   Positioned(
-                   right: 90,
-                   top:125,
-                   child: Container(
-                     height: 50,
-                     width: 100,
-                     decoration: BoxDecoration(
-                     borderRadius: BorderRadius.circular(155),
-                      color: Colors.blue) 
-                   ,),
-                 )*/
               SizedBox(
                 height: 10,
               ),

@@ -1,6 +1,7 @@
-import 'package:finallygod/Providers/vacination.dart';
+import 'package:finallygod/Modals/vacination.dart';
 import 'package:finallygod/widgets/piechart.dart';
 import 'package:flutter/material.dart';
+
 class DiseaseDetails extends StatefulWidget {
   Vaccination vac;
   DiseaseDetails(this.vac);
@@ -65,36 +66,16 @@ class _DiseaseDetailsState extends State<DiseaseDetails> {
                   'Time to Vaccinne',
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
                 ),
-                for(int i=0;i<widget.vac.time.length;i++)
-                    
-                
-                Row(
-                  children: [
-                    Icon(Icons.date_range),
-                    Text(
-                       widget.vac.time[i],
-                      style: TextStyle(color: Colors.grey[600]),
-                    )
-                  ],
-                ),
-              /*  Row(
-                  children: [
-                    Icon(Icons.date_range),
-                    Text(
-                      "10 weeks",
-                      style: TextStyle(color: Colors.grey[600]),
-                    )
-                  ],
-                ),
-                Row(
-                  children: [
-                    Icon(Icons.date_range),
-                    Text(
-                      "14 weeks",
-                      style: TextStyle(color: Colors.grey[600]),
-                    )
-                  ],
-                )*/
+                for (int i = 0; i < widget.vac.time.length; i++)
+                  Row(
+                    children: [
+                      Icon(Icons.date_range),
+                      Text(
+                        widget.vac.time[i],
+                        style: TextStyle(color: Colors.grey[600]),
+                      )
+                    ],
+                  ),
               ],
             )
           ]),
@@ -112,7 +93,7 @@ class _DiseaseDetailsState extends State<DiseaseDetails> {
                 borderRadius: BorderRadius.circular(15),
                 border: Border.all(color: Colors.grey, width: 2)),
             child: Text(
-             widget.vac.whatfor,
+              widget.vac.whatfor,
               textAlign: TextAlign.justify,
             ),
           ),
@@ -138,13 +119,13 @@ class _DiseaseDetailsState extends State<DiseaseDetails> {
             children: [
               Container(
                   width: size.width / 2.8,
-                  margin: EdgeInsets.only( left:10, top: 10),
+                  margin: EdgeInsets.only(left: 10, top: 10),
                   padding: EdgeInsets.all(3),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
                       border: Border.all(color: Colors.grey, width: 2)),
                   child: Text(
-                   widget.vac.sideeffects,
+                    widget.vac.sideeffects,
                     textAlign: TextAlign.center,
                   )),
               Container(
@@ -155,7 +136,7 @@ class _DiseaseDetailsState extends State<DiseaseDetails> {
                       borderRadius: BorderRadius.circular(15),
                       border: Border.all(color: Colors.grey, width: 2)),
                   child: Text(
-                  widget.vac.worstcase,
+                    widget.vac.worstcase,
                     textAlign: TextAlign.center,
                   ))
             ],

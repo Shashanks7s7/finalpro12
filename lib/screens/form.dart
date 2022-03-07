@@ -1,8 +1,12 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:finallygod/Providers/notifications.dart';
-import 'package:finallygod/Providers/vacination.dart';
+import 'package:finallygod/Modals/childdb.dart';
+import 'package:finallygod/Modals/dbnotification.dart';
+import 'package:finallygod/Modals/mydatabase.dart';
+import 'package:finallygod/Modals/notifications.dart';
+import 'package:finallygod/Modals/vaccinedb.dart';
+import 'package:finallygod/Modals/vacination.dart';
 import 'package:finallygod/widgets/ipicker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -54,7 +58,7 @@ class _ChildFormState extends State<ChildForm> {
       ));
       return;
     }
-     if (!isvalid || male==female) {
+    if (!isvalid || male == female) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text("Please select single gender"),
         backgroundColor: Theme.of(context).errorColor,
@@ -67,6 +71,24 @@ class _ChildFormState extends State<ChildForm> {
 
     if (isvalid) {
       formkey.currentState!.save();
+
+      int id = DateTime.now().millisecondsSinceEpoch;
+      final childdata = ChildDB(
+        ChildDBID: id,
+        name: name,
+        dob: myFormat.format(da),
+      );
+      await MyDatabase.instance.createchilddb(childdata);
+
+      for (int i = 0; i < vacdetails.length; i++) {
+        final data1 = VaccineDB(
+            vaccineDBID: null,
+            vaccinename: vacdetails[i].disease,
+            isdone: false,
+            istimegone: false,
+            childID: id);
+        await MyDatabase.instance.createvaccinedb(data1);
+      }
       try {
         final user = FirebaseAuth.instance.currentUser;
         final userdata = await FirebaseFirestore.instance
@@ -95,14 +117,12 @@ class _ChildFormState extends State<ChildForm> {
                       .update({'id': value.id});
                 })));
         Noti(vacdetails).notifications();
-
-       
+        scheduleNotification(DateTime.now().toString());
       } catch (error) {
         setState(() {
           isloading = false;
         });
       }
-
       Navigator.of(context).pop();
     }
   }
@@ -171,45 +191,43 @@ class _ChildFormState extends State<ChildForm> {
                   ),
                   Container(
                     height: 70,
-                     child: Row(
-                       mainAxisAlignment: MainAxisAlignment.spaceAround,
-                       children: [
-   ElevatedButton(
-     style: ElevatedButton.styleFrom(
-elevation: 1,
-primary: Colors.grey[400]
-
-         ),
-     
-                          onPressed: datep,
-                          child: Text(
-                            "Choose Date of birth",
-                            style: Theme.of(context).textTheme.bodyText1,
-                          )),
-                          
-                      Container(
-                        width: 150,
-                        height: 30,
-                        child: FittedBox(
-                            child: Text(
-                          da == null
-                              ? "No Date Choosen"
-                              : 'Picked Date: ${myFormat.format(da)}',
-                          style: Theme.of(context).textTheme.bodyText1,
-                        )),
-                      ),
-                     
-                    
-                    ]),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  elevation: 1, primary: Colors.grey[400]),
+                              onPressed: datep,
+                              child: Text(
+                                "Choose Date of birth",
+                                style: Theme.of(context).textTheme.bodyText1,
+                              )),
+                          Container(
+                            width: 150,
+                            height: 30,
+                            child: FittedBox(
+                                child: Text(
+                              da == null
+                                  ? "No Date Choosen"
+                                  : 'Picked Date: ${myFormat.format(da)}',
+                              style: Theme.of(context).textTheme.bodyText1,
+                            )),
+                          ),
+                        ]),
                   ),
                   SizedBox(
                     height: 5,
                   ),
-                  Text('Select Gender',style: TextStyle(fontSize: 16),),
+                  Text(
+                    'Select Gender',
+                    style: TextStyle(fontSize: 16),
+                  ),
                   Row(children: [
-                    Text('Male',style: TextStyle(
-                      fontSize: 16,fontWeight: FontWeight.w400
-                    ),),
+                    Text(
+                      'Male',
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+                    ),
                     Checkbox(
                         value: male,
                         onChanged: (_) {
@@ -220,8 +238,11 @@ primary: Colors.grey[400]
                   ]),
                   Row(
                     children: [
-                      Text('Female',style: TextStyle(
-                      fontSize: 16,fontWeight: FontWeight.w400),),
+                      Text(
+                        'Female',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w400),
+                      ),
                       Checkbox(
                           value: female,
                           onChanged: (_) {
@@ -236,21 +257,23 @@ primary: Colors.grey[400]
                       ? Center(
                           child: CircularProgressIndicator(),
                         )
-                      :GestureDetector(
-                        onTap: submit,
-                        child: Container(
-                          height: 50,
-                          width: 250,
-                          decoration: BoxDecoration(
-                           borderRadius: BorderRadius.circular(25),
-                           border: Border.all(width: 1,color: Colors.grey),
-                           color: Theme.of(context).primaryColor,
+                      : GestureDetector(
+                          onTap: submit,
+                          child: Container(
+                            height: 50,
+                            width: 250,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(25),
+                              border: Border.all(width: 1, color: Colors.grey),
+                              color: Theme.of(context).primaryColor,
+                            ),
+                            child: Center(
+                                child: Text(
+                              "Submit",
+                              style: Theme.of(context).textTheme.headline2,
+                            )),
                           ),
-                          child: Center(child: Text("Submit",style: Theme.of(context).textTheme.headline2,)),
-                          
-                          
-                        ),
-                      )
+                        )
                 ]))),
       ),
     );
@@ -266,48 +289,5 @@ primary: Colors.grey[400]
     }));
   }
 
- /* Future<void> scheduleAlarm() async {
-      final user = FirebaseAuth.instance.currentUser;
-    var va = '2021-07-19 12:40:30';
-    print(DateTime.now().toLocal());
-    var date = DateTime.now(); //DateTime.parse(va);
-    List<dynamic> scheduledDate = [
-      date.add(Duration(seconds: 10)),
-       date.add(Duration(seconds: 20)),
-       date.add(Duration(seconds: 30))
-    ];
-    List<String> title = ["Nameste", "this is the second", "third"];
-
-    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
-      'id',
-      'name',
-      
-      icon: 'ic_launcher',
-      enableVibration: true,
-      importance: Importance.high,
-      priority: Priority.high,
-      largeIcon: DrawableResourceAndroidBitmap('ic_launcher'),
-    );
-
-    var platformChannelSpecifics = NotificationDetails(
-      android: androidPlatformChannelSpecifics,
-    );
-
-    for (int i = 0; i <= 2; i++) {
-    await flutterLocalNotificationsPlugin.schedule(0, title[i],title[i], scheduledDate[i], platformChannelSpecifics,
-        payload:  i.toString(),
-        androidAllowWhileIdle: true);
-      
-   
-    FirebaseFirestore.instance
-        .collection('notifications').
-       add({
-         'userId': user!.uid,
-         'createdAt':DateTime.now(),
-         "noti": title[i]});
   
-
-
-    }
-  }*/
 }
