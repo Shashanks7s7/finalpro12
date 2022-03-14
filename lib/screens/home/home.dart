@@ -39,16 +39,22 @@ class _HomeState extends State<Home> {
         update(event.payload!['pay'].toString());
         print("ji");
       }
-      ;
+      if (event.buttonKeyPressed == 'no') {
+       
+        updateistime(event.payload!['pay'].toString());
+        print("ji");
+      }
       Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (_) => MyProfile()),
           (route) => route.isFirst);
     });
   }
-
+Future updateistime(String id) async {
+    await MyDatabase.instance.updateistimegone(1, int.parse(id));
+  }
   Future update(String id) async {
-    await MyDatabase.instance.updateposmasterpayment(1, int.parse(id));
+    await MyDatabase.instance.updateisdone(1, int.parse(id));
   }
 
   Future<String?> onSelectNotification(String? payload) async {

@@ -85,18 +85,28 @@ class MyDatabase {
     }
     
   }
-   Future deletevaccine(int id)async{
+   Future deletevaccine()async{
    final db= await instance.database;
-   await db!.delete(tableVaccineDB,where: 'childID = ?',whereArgs: [id]);
+   await db!.delete(tableVaccineDB);
+   await db.rawQuery("UPDATE sqlite_sequence SET seq=0 WHERE name=? ",[tableVaccineDB]);
+   //await db!.delete(tableVaccineDB,where: 'childID = ?', whereArgs: [id]);
+  
+
+   
      }
-  Future deletechild(int id)async{
+  Future deletechild()async{
    final db= await instance.database;
-   await db!.delete(tableChildDB,where: '_childDBID = ?',whereArgs: [id]);
+   return await db!.delete(tableChildDB);
      }
 
-  Future updateposmasterpayment(int done, int id) async {
+  Future updateisdone(int done, int id) async {
     final db = await instance.database;
     return db!.update(tableVaccineDB, {'isdone': done},
+        where: '${VaccineDBField.vaccineDBID} = ?', whereArgs: [id]);
+  }
+  Future updateistimegone(int done, int id) async {
+    final db = await instance.database;
+    return db!.update(tableVaccineDB, {'istimegone': done},
         where: '${VaccineDBField.vaccineDBID} = ?', whereArgs: [id]);
   }
 

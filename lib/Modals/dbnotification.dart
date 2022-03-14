@@ -43,6 +43,7 @@ Future<void> scheduleNotification(String dateti) async {
           channelKey: 'schedule_channel',
           title: "schedule 1",
           body: 'Did you get the DPT Vaccine?',
+          autoDismissible: false,
           wakeUpScreen: true,
           category: NotificationCategory.Reminder,
           payload: {'pay': '1'},

@@ -48,7 +48,7 @@ class _MyProfileState extends State<MyProfile> {
       ..listen((event) {
         event.docs.forEach((element) {
           itemlist.add(element.data().cast());
-          // print("${element['name']}  jgjdgj ${element.data().cast()}" );
+         
         });
       });
     setState(() {
@@ -56,10 +56,11 @@ class _MyProfileState extends State<MyProfile> {
     });
   }
 
-  void removeitems(String id, int index) async {
+  void removeitems(String id, int childid) async {
+    print("id"+childid.toString());
     try {
-      await MyDatabase.instance.deletevaccine(index);
-      await MyDatabase.instance.deletechild(index);
+      await MyDatabase.instance.deletevaccine();
+      await MyDatabase.instance.deletechild();
       await FirebaseFirestore.instance
           .collection('registration')
           .doc(id)
@@ -90,18 +91,19 @@ class _MyProfileState extends State<MyProfile> {
       loading = true;
     });
     childdb = await MyDatabase.instance.readAllchildDB();
-    print('lll' + childdb.toString());
+   
     if (childdb != []) {
       for (int i = 0; i < childdb.length; i++) {
         List<VaccineDB> pro =
             await MyDatabase.instance.readvaccine(childdb[i].ChildDBID!);
+            print("pro"+pro.toString());
         childvaccinedata.putIfAbsent(i.toString(), () => pro);
       }
-      print("llllll");
+    
       setState(() {
         loading = false;
       });
-      print("llllll");
+    
     }
   }
 
@@ -236,7 +238,7 @@ class _MyProfileState extends State<MyProfile> {
                             itemCount: childlist.length,
                             itemBuilder: (context, index) {
                               var d = childvaccinedata['$index']!;
-                              print("muji" + d[0].toString());
+                            
                               return Container(
                                   height: size.height / 1.5,
                                   width: size.width / 1.2,
@@ -368,7 +370,7 @@ class _MyProfileState extends State<MyProfile> {
                                                                           childlist[index]
                                                                               ['id'],
                                                                               
-                                                                          index+1),
+                                                                          d[index].childID),
                                                                   child: Text(
                                                                       'Ok'),
                                                                 )
@@ -384,6 +386,7 @@ class _MyProfileState extends State<MyProfile> {
                                               child: ListView.builder(
                                                   itemCount: d.length,
                                                   itemBuilder: (context, inde) {
+                                                    print(d[inde].vaccinename+ d[inde].vaccineDBID.toString());
                                                     return ListTile(
                                                       title: Text(
                                                           d[inde].vaccinename),
